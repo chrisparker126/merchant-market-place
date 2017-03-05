@@ -1,43 +1,60 @@
 package marketplace.core;
 
 import java.io.IOException;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import marketplace.domain.IMarketPlaceRepository;
+import marketplace.domain.IMerchantRepository;
 import marketplace.domain.Merchant;
 
 public class MerchantManager implements IMerchantManager {
 
-	public MerchantManager(IMarketPlaceRepository repository) {
+	private Logger logger = Logger.getLogger(MarketPlace.class);
+	
+	public MerchantManager(IMerchantRepository repository) {
 		super();
 		this.repository = repository;
 	}
 
 	@Autowired
-	private IMarketPlaceRepository repository = null;
+	private IMerchantRepository repository = null;
 			
 	@Override
 	public int createMerchant(String name, String description) throws MerchantManagerException {		
 		try
 		{
 			int newMerchantId = repository.getTopMerchantId() + 1;
-			repository.insertMerchant(new Merchant(name, newMerchantId, description));
+			repository.addMerchant(new Merchant(name, newMerchantId, description));
 			return newMerchantId;
-		}catch(IOException e)
+		}catch(Exception e)
 		{
 			throw new MerchantManagerException(e.getMessage());
 		}
 	}
 
 	@Override
-	public boolean deleteMerchant(int merchantId) {
-		// TODO Auto-generated method stub
-		return false;
+	public void deleteMerchant(int merchantId) throws MerchantManagerException {
+
+		
 	}
 
 	@Override
-	public boolean changeMerchangeName(int merchantId, String name) {
+	public void changeMerchangeName(int merchantId, String name) throws MerchantManagerException {
 		// TODO Auto-generated method stub
-		return false;
+		
+	}
+
+	@Override
+	public Merchant getMerchant(int merchantId) throws MerchantManagerException {
+
+		try{
+			return repository.getMerchant(merchantId);
+		}
+		catch(IOException e)
+		{
+			logger.error(e);
+			throw new MerchantManagerException(e.getMessage());
+		}
 	}
 
 }

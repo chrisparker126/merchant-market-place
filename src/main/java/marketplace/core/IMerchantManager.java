@@ -1,5 +1,7 @@
 package marketplace.core;
 
+import marketplace.domain.Merchant;
+
 public interface IMerchantManager {
 
 	public class MerchantManagerException extends Exception	
@@ -11,8 +13,13 @@ public interface IMerchantManager {
 	
 	public int createMerchant(String name, String description)
 	throws MerchantManagerException;
-	public boolean deleteMerchant(int merchantId)
+	
+	public void deleteMerchant(int merchantId)
 	throws MerchantManagerException;
-	public boolean changeMerchangeName(int merchantId, String name)
+	
+	public void changeMerchangeName(int merchantId, String name)
+	throws MerchantManagerException;
+	
+	public Merchant getMerchant(int merchantId)
 	throws MerchantManagerException;
 }

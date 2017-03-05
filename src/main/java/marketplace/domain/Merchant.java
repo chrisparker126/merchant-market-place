@@ -2,6 +2,7 @@ package marketplace.domain;
 
 public class Merchant {
 
+	
 	public Merchant(String name, int merchantId, String description) {		
 		this.name = name;
 		this.merchantId = merchantId;

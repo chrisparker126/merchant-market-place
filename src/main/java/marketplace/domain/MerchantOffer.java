@@ -4,34 +4,32 @@ import org.joda.money.Money;
 
 public class MerchantOffer {
 	
-	enum OfferType { Goods, Services }
-	
-	public MerchantOffer(String name, String description, int merchantId, int merchantOffId, Money price) {		
+	public MerchantOfferId getMerchantOfferId() {
+		return merchantOfferId;
+	}
+	public MerchantOffer(String name, String description, MerchantOfferId merchantOfferId, Money price) {
+		super();
 		this.name = name;
 		this.description = description;
-		this.merchantId = merchantId;
-		this.merchantOffId = merchantOffId;
+		this.merchantOfferId = merchantOfferId;
 		this.price = price;
 	}
+	
+	enum OfferType { Goods, Services }
+	
 	public String getName() {
 		return name;
 	}
 	public String getDescription() {
 		return description;
 	}
-	public int getMerchantId() {
-		return merchantId;
-	}
-	public int getMerchantOffId() {
-		return merchantOffId;
-	}
 	public Money getPrice() {
 		return price;
 	}
+	
 	private final String name;
 	private final String description;
-	private final int merchantId;
-	private final int merchantOffId;
+	private final MerchantOfferId merchantOfferId;
 	private final Money price;
 	
 }

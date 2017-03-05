@@ -1,5 +1,6 @@
 package marketplace.core;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.joda.money.Money;
@@ -15,9 +16,9 @@ public interface IMerchantOfferManager {
 		}		
 	}
 	
-	public int createMerchantOffer(String name, String description, 
+	public void createMerchantOffer(String name, String description, 
 			Money price, int merchantId) throws MerchantOfferManagerException;
 	public boolean removeMerchantOffer(int merchantId, int merchantOfferId) 
 	throws MerchantOfferManagerException;
-	public List<MerchantOffer> getMerchantOffers(int merchantId);
+	public Collection<MerchantOffer> getMerchantOffers(int merchantId);
 }
