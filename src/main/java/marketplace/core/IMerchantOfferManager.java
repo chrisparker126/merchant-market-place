@@ -16,9 +16,12 @@ public interface IMerchantOfferManager {
 		}		
 	}
 	
-	public void createMerchantOffer(String name, String description, 
+	public MerchantOffer createMerchantOffer(String name, String description, 
 			Money price, int merchantId) throws MerchantOfferManagerException;
-	public boolean removeMerchantOffer(int merchantId, int merchantOfferId) 
+	public MerchantOffer removeMerchantOffer(MerchantOfferId merchantOfferId) 
 	throws MerchantOfferManagerException;
-	public Collection<MerchantOffer> getMerchantOffers(int merchantId);
+	public Collection<MerchantOffer> getMerchantOffers(int merchantId)
+			throws MerchantOfferManagerException;;
+	public MerchantOffer getMerchantOffer(MerchantOfferId merchantOfferId)
+					throws MerchantOfferManagerException;
 }

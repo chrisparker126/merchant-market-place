@@ -1,39 +1,53 @@
 package marketplace.domain;
 
-import java.io.IOException;
-
-import marketplace.domain.exceptions.AlreadyExistException;
-import marketplace.domain.exceptions.DoesNotExistException;
+import java.util.TreeMap;
 
 public class MerchantDb implements IMerchantRepository, IMerchantInfoRepository {
 
 	@Override
-	public boolean getDoesMerchantExist(int merchantId) throws IOException {
+	public Merchant updateMerchant(int merchantId, String name, String description) {
 		// TODO Auto-generated method stub
-		return false;
+		Merchant merchant = getMerchant(merchantId);
+		
+		if(merchant == null)
+			return null;
+		
+		Merchant updatedMerchant = 
+				new Merchant(name != null ? name : merchant.getName(), merchantId, 
+						description != null ? description : merchant.getDescription());
+		
+		merchants.put(merchantId, updatedMerchant);
+		return updatedMerchant;
 	}
 
 	@Override
-	public void addMerchant(Merchant merchant) throws IOException, AlreadyExistException {
-		// TODO Auto-generated method stub
-
+	public boolean getDoesMerchantExist(int merchantId) {
+		return merchants.containsKey(merchantId);
 	}
 
 	@Override
-	public int getTopMerchantId() throws IOException {
-		// TODO Auto-generated method stub
-		return 0;
+	public Merchant addMerchant(Merchant merchant){
+		return merchants.put(merchant.getMerchantId(), merchant);
 	}
 
 	@Override
-	public Merchant getMerchant(int merchantId) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+	public int getTopMerchantId() {
+		
+		if(merchants.isEmpty())
+			return 0;
+		else
+			return merchants.lastKey();
 	}
 
 	@Override
-	public Merchant deleteMerchant(int merchantId) throws IOException {
-		return null;
+	public Merchant getMerchant(int merchantId) {
+		return merchants.get(merchantId);
 	}
 
+	@Override
+	public Merchant deleteMerchant(int merchantId) {
+		return merchants.remove(merchantId);
+	}
+
+	private TreeMap<Integer, Merchant> merchants = new TreeMap<Integer, Merchant>();
 }

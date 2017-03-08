@@ -20,12 +20,14 @@ public class MerchantManager implements IMerchantManager {
 	private IMerchantRepository repository = null;
 			
 	@Override
-	public int createMerchant(String name, String description) throws MerchantManagerException {		
+	public Merchant createMerchant(String name, String description) throws MerchantManagerException {		
 		try
 		{
-			int newMerchantId = repository.getTopMerchantId() + 1;
-			repository.addMerchant(new Merchant(name, newMerchantId, description));
-			return newMerchantId;
+			synchronized (this) {			
+				int newMerchantId = repository.getTopMerchantId() + 1;
+				return repository.addMerchant(new Merchant(name, newMerchantId, description));
+			}
+						
 		}catch(Exception e)
 		{
 			throw new MerchantManagerException(e.getMessage());
@@ -33,9 +35,11 @@ public class MerchantManager implements IMerchantManager {
 	}
 
 	@Override
-	public void deleteMerchant(int merchantId) throws MerchantManagerException {
+	public Merchant deleteMerchant(int merchantId) throws MerchantManagerException {
 
-		
+		synchronized (this) {	
+			return repository.deleteMerchant(merchantId);
+		}
 	}
 
 	@Override
@@ -47,13 +51,8 @@ public class MerchantManager implements IMerchantManager {
 	@Override
 	public Merchant getMerchant(int merchantId) throws MerchantManagerException {
 
-		try{
+		synchronized (this) {
 			return repository.getMerchant(merchantId);
-		}
-		catch(IOException e)
-		{
-			logger.error(e);
-			throw new MerchantManagerException(e.getMessage());
 		}
 	}
 

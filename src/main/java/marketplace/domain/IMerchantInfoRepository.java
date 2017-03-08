@@ -1,9 +1,12 @@
 package marketplace.domain;
 
-import java.io.IOException;
-
-
+/**
+ * This exist purely to provide information on merchants
+ * to interested clients
+ * and isolate ability to make changes to merchants 
+ * @author Chris.Parker
+ */
 public interface IMerchantInfoRepository {
-	Merchant getMerchant(int merchantId) throws IOException;
-	boolean getDoesMerchantExist(int merchantId) throws IOException;
+	Merchant getMerchant(int merchantId) ;
+	boolean getDoesMerchantExist(int merchantId) ;
 }

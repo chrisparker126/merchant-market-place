@@ -11,10 +11,10 @@ public interface IMerchantManager {
 		}		
 	}
 	
-	public int createMerchant(String name, String description)
+	public Merchant createMerchant(String name, String description)
 	throws MerchantManagerException;
 	
-	public void deleteMerchant(int merchantId)
+	public Merchant deleteMerchant(int merchantId)
 	throws MerchantManagerException;
 	
 	public void changeMerchangeName(int merchantId, String name)

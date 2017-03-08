@@ -1,23 +1,15 @@
 package marketplace.core;
 
 import java.util.Collection;
-import java.util.List;
-
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import marketplace.domain.IMerchantInfoRepository;
 import marketplace.domain.IMerchantOfferRepository;
-import marketplace.domain.IMerchantRepository;
 import marketplace.domain.MerchantOffer;
+import marketplace.domain.MerchantOfferId;
 
 public class MerchantOfferManager implements IMerchantOfferManager {
-
-	public MerchantOfferManager(IMerchantOfferRepository repository, IMerchantInfoRepository infoRepo) {
-		super();
-		this.repository = repository;
-		this.merchantInfoRepo = infoRepo;
-	}
 
 	@Autowired
 	IMerchantOfferRepository repository = null;
@@ -25,26 +17,63 @@ public class MerchantOfferManager implements IMerchantOfferManager {
 	@Autowired
 	IMerchantInfoRepository merchantInfoRepo = null;
 	
-	
+	@Override
+	public MerchantOffer getMerchantOffer(MerchantOfferId offerId) throws MerchantOfferManagerException {
+		synchronized (this) {
+			return repository.getMerchantOffer(offerId);
+		}		
+	}
+
+	public MerchantOfferManager(IMerchantOfferRepository repository, IMerchantInfoRepository infoRepo) {
+		super();
+		this.repository = repository;
+		this.merchantInfoRepo = infoRepo;
+	}
 	
 	@Override
-	public void createMerchantOffer(String name, String description, Money price, int merchantId)
+	public MerchantOffer createMerchantOffer(String name, String description, Money price, int merchantId)
 			throws MerchantOfferManagerException {
 	
-		// first check merchant exists 
+		// first check merchant exists
+		
+		synchronized (this) {
+			
+			try {
+				if(merchantInfoRepo.getDoesMerchantExist(merchantId))
+				{
+					MerchantOfferId moid = repository.getTopMerhantOfferIdForMerchantId(merchantId);
+					return repository.addMerchantOffer(new MerchantOffer(name, description, 
+							new MerchantOfferId(merchantId,
+									moid.getOfferId()+1)
+							, price));
+				}
+				else
+					return null;
+			} catch (Exception e) {
+			
+				throw new MerchantOfferManagerException(e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public MerchantOffer removeMerchantOffer(MerchantOfferId merchantOfferId) throws MerchantOfferManagerException {
+
+		synchronized (this) {
+			return repository.removeMerchantOffer(merchantOfferId);	
+		}
+		
 		
 	}
 
 	@Override
-	public boolean removeMerchantOffer(int merchantId, int merchantOfferId) throws MerchantOfferManagerException {
-
-		return false;
-	}
-
-	@Override
-	public Collection<MerchantOffer> getMerchantOffers(int merchantId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<MerchantOffer> getMerchantOffers(int merchantId) 
+			throws MerchantOfferManagerException
+	{
+		synchronized (this) {
+			return repository.getMerchantOffers(merchantId);	
+		}
+				
 	}
 
 }
