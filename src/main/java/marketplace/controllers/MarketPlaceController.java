@@ -1,15 +1,15 @@
 package marketplace.controllers;
 
-import java.util.Collection;
-import java.util.LinkedList;
 
-import org.joda.money.Money;
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,9 +22,20 @@ import marketplace.domain.MerchantOfferId;
 @RestController
 public class MarketPlaceController {
 
+	class Error
+	{
+		public Error(){}
+		public String error = "Failed";
+		public Integer error_code = 1;
+	}
 	 @ResponseStatus(value=HttpStatus.NOT_FOUND)  // 404
 	 public class MerchantOrOfferNotFoundException extends RuntimeException {
-		 private static final long serialVersionUID = 1L;
+		 
+		private static final long serialVersionUID = 1L;
+			public MerchantOrOfferNotFoundException(String message) {
+				super(message);
+			}
+			
 	 }
 
 	 @ResponseStatus(value=HttpStatus.BAD_REQUEST)  // 400
@@ -43,102 +54,104 @@ public class MarketPlaceController {
 		this.marketPlace = marketPlace;
 	}
 
-	@RequestMapping(value="/merchant", method=RequestMethod.POST)
+	@RequestMapping(value="/merchant", method=RequestMethod.POST,
+			produces="application/json", consumes="application/json")
 	public Merchant createMerchant(
-			@RequestParam(value="name", defaultValue="") String name,
-			@RequestParam(value="description", defaultValue="") String description)
+			@RequestBody Merchant merchant)
 	{	
-		if(name.isEmpty())
-		{
-			throw new InvalidParameters("Invalid parameter, merchant name must be non empty");
-		}
-		else
-			return marketPlace.createMerchant(name, description);
+	
+		if(merchant.getName()  == null)
+			throw new InvalidParameters("merchant must have a name");
 		
+		Merchant m =  marketPlace.createMerchant(merchant.getName(), merchant.getDescription());
+		return m;		
 	}
 	
-	@RequestMapping(value="/merchant/{id}", method=RequestMethod.GET)
-	public Merchant getMerchant(
-			 @PathVariable int id)
-	{	
-		Merchant merchant = marketPlace.getMerchant(id);
-		
-		if(merchant == null)
-			throw new MerchantOrOfferNotFoundException();
-        return merchant;
-	}
-	
-	@RequestMapping(value="/merchant/{mid}", method=RequestMethod.PUT)
-	public Merchant updateMerchant(
+	@RequestMapping(value="/merchant/{mid}", method=RequestMethod.GET,
+			produces="application/json")
+	public ResponseEntity<?> getMerchant(
 			 @PathVariable int mid)
 	{	
-		return null;
+		Merchant merchant = marketPlace.getMerchant(mid);
+		
+		if(merchant == null)
+			return new ResponseEntity<Error>( new Error(), HttpStatus.NOT_FOUND);
+		
+        return new ResponseEntity<Merchant>(merchant, HttpStatus.OK);
 	}
-
-	@RequestMapping(value="/merchant/{mid}", method=RequestMethod.DELETE)
+	
+	@RequestMapping(value="/merchant/{mid}", method=RequestMethod.DELETE,
+			produces="application/json")
 	public Merchant deleteMerchant(
 			 @PathVariable int mid)
 	{	
 		return marketPlace.deleteMerchant(mid);		
 	}
 	
-	@RequestMapping(value="/merchant/{id}/offers", method=RequestMethod.GET)
-	public Collection<MerchantOffer> offers(
-			 @PathVariable int id)
+	@RequestMapping(value="/merchant/{mid}/offers", method=RequestMethod.GET,
+			produces="application/json")
+	public @ResponseBody Collection<MerchantOffer> offers(
+			 @PathVariable int mid)
 	{	
-		Collection<MerchantOffer> offers = marketPlace.getMerchantOffers(id);
-		
-		if(offers != null)
-			throw new MerchantOrOfferNotFoundException();
-		else
+		if(marketPlace.getMerchantExists(mid))
 		{
-			offers = new LinkedList<MerchantOffer>();
-			offers.add(new MerchantOffer("Product1", "description", new 
-					MerchantOfferId(1, 2), Money.parse("USD 23.87")));
-			return offers;
+			Collection<MerchantOffer> offers = marketPlace.getMerchantOffers(mid);
+			
+			if(offers == null)
+				throw new MerchantOrOfferNotFoundException("Could not get offers for merchant Id: "
+						+ mid);
+			else
+			{
+				return marketPlace.getMerchantOffers(mid);
+			}
 		}
+		else
+			throw new MerchantOrOfferNotFoundException("No merchant found with merchant Id: "
+					+ mid);
+		
 	}
 	
-	@RequestMapping(value="/merchant/{mid}/offer/{oid}", method=RequestMethod.GET)
+	@RequestMapping(value="/merchant/{mid}/offer/{oid}", method=RequestMethod.GET,
+			produces="application/json")
 	public MerchantOffer offer(
 			 @PathVariable int mid, @PathVariable int oid)
 	{	
 		MerchantOffer offer = marketPlace.getMerchantOffer(new MerchantOfferId(mid, oid));
 		
 		if(offer == null)
-			throw new MerchantOrOfferNotFoundException();
+			throw new MerchantOrOfferNotFoundException("Did not find an offer with Offer Id"
+					+ "mid : " + mid + "oid: " + oid);
 
 		return offer;
 	}
 	
-	@RequestMapping(value="/merchant/{mid}/offer", method=RequestMethod.POST)
-	public MerchantOffer createOffer(
-			 @PathVariable int mid, 
-				@RequestParam(value="name", defaultValue="") String name,
-				@RequestParam(value="description", defaultValue="") String description,
-				@RequestParam(value="price", defaultValue="") String price,
-				@RequestParam(value="curency", defaultValue="") String currency)
+	@RequestMapping(value="/merchant/{mid}/offer", method=RequestMethod.POST,
+			produces="application/json", consumes="application/json")
+	public @ResponseBody MerchantOffer createOffer(
+			 @PathVariable int mid, @RequestBody MerchantOffer offer)
 	{	
-		
-		MerchantOffer offer = marketPlace.createMerchantOffer(mid, name, description, price, currency);
 
-		return offer;
+		if(!marketPlace.getMerchantExists(mid))
+			throw new MerchantOrOfferNotFoundException("merchant does not exist for Merchant Id: " 
+					+ mid);
+				
+		MerchantOffer createdOffer = marketPlace.createMerchantOffer(
+				mid, offer.getName(), offer.getDescription(), null);
+		
+		return createdOffer;
 	}
 	
-	@RequestMapping(value="/merchant/{mid}/offer", method=RequestMethod.PUT)
+	@RequestMapping(value="/merchant/{mid}/offer", method=RequestMethod.PUT, 
+			produces="application/json", consumes="application/json")
 	public MerchantOffer updateOffer(
-			 @PathVariable int mid, @PathVariable int oid,
-				@RequestParam(value="name", defaultValue="") String name,
-				@RequestParam(value="description", defaultValue="") String description,
-				@RequestParam(value="price", defaultValue="") String price,
-				@RequestParam(value="curency", defaultValue="") String currency)
+			 @RequestBody MerchantOffer offer)
 	{	
-		MerchantOffer offer = marketPlace.getMerchantOffer(new MerchantOfferId(mid, oid));
+		MerchantOffer updatedOffer = marketPlace.updateMerchantOffer(offer);
 		
-		if(offer == null)
-			throw new MerchantOrOfferNotFoundException();
+		if(updatedOffer == null)
+			throw new MerchantOrOfferNotFoundException("Update failed for offer");
 
-		return offer;
+		return updatedOffer;
 	}
 	
 	@Autowired

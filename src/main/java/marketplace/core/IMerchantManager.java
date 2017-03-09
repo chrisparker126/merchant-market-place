@@ -16,10 +16,9 @@ public interface IMerchantManager {
 	
 	public Merchant deleteMerchant(int merchantId)
 	throws MerchantManagerException;
-	
-	public void changeMerchangeName(int merchantId, String name)
-	throws MerchantManagerException;
-	
+
 	public Merchant getMerchant(int merchantId)
 	throws MerchantManagerException;
+	
+	public boolean getMerchantExists(int merchantId);
 }

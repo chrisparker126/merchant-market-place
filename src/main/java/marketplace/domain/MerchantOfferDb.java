@@ -89,8 +89,35 @@ public class MerchantOfferDb implements IMerchantOfferRepository {
 			return merchantOffers.get(oid);
 		}		
 	}
+
+	@Override
+	public MerchantOffer updateMerchantOffer(MerchantOffer offer) {
+	
+		MerchantOffer currentOffer = getMerchantOffer(offer.getMerchantOfferId());
+		
+		if(currentOffer == null)
+			return null;
+		
+		if(offer.name == null)
+			offer.name = currentOffer.name;
+		
+		if(offer.description == null)
+			offer.description = currentOffer.description;
+		
+		if(offer.price == null)
+			offer.price = currentOffer.price;
+		
+		SortedMap<Integer, MerchantOffer> merchantOffers = 
+				merchantOffersMap.get(offer.getMerchantOfferId().getMerchantId());
+		
+		merchantOffers.put(offer.getMerchantOfferId().getOfferId(), 
+				offer);
+		return offer;
+	}
+
 	
 	private HashMap<Integer, SortedMap<Integer, MerchantOffer> > merchantOffersMap = new
 			HashMap<Integer, SortedMap<Integer, MerchantOffer> >();
+
 	
 }

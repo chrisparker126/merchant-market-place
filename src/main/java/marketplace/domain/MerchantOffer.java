@@ -2,7 +2,17 @@ package marketplace.domain;
 
 import org.joda.money.Money;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import marketplace.domain.MoneyDeserialiser;
+import marketplace.domain.MoneySerialiser;
+
 public class MerchantOffer {
+	
+	public MerchantOffer()
+	{
+		
+	}
 	
 	public MerchantOfferId getMerchantOfferId() {
 		return merchantOfferId;
@@ -15,21 +25,25 @@ public class MerchantOffer {
 		this.price = price;
 	}
 	
-	enum OfferType { Goods, Services }
-	
 	public String getName() {
 		return name;
 	}
 	public String getDescription() {
 		return description;
 	}
+		
+	public String name;
+	
+	public String description;
+	public MerchantOfferId merchantOfferId;
+	
+	@JsonDeserialize(using = MoneyDeserialiser.class)
+	@JsonSerialize(using = MoneySerialiser.class)
+	public Money price;
+
+
 	public Money getPrice() {
 		return price;
 	}
-	
-	private final String name;
-	private final String description;
-	private final MerchantOfferId merchantOfferId;
-	private final Money price;
 	
 }

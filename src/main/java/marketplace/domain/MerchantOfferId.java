@@ -2,6 +2,7 @@ package marketplace.domain;
 
 public class MerchantOfferId
 {
+	public MerchantOfferId(){}
 	public MerchantOfferId(int merchantId, int offerId) {
 		super();
 		this.merchantId = merchantId;
@@ -25,6 +26,6 @@ public class MerchantOfferId
 	public int getOfferId() {
 		return offerId;
 	}
-	private int merchantId;
-	private int offerId;
+	public int merchantId;
+	public int offerId;
 }

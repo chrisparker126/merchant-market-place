@@ -76,4 +76,13 @@ public class MerchantOfferManager implements IMerchantOfferManager {
 				
 	}
 
+	@Override
+	public MerchantOffer updateMerchantOffer(MerchantOffer offer) throws MerchantOfferManagerException {
+		
+		synchronized (this) {
+			return repository.updateMerchantOffer(offer);
+		}
+		
+	}
+
 }

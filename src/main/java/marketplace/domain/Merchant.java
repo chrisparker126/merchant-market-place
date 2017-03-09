@@ -2,6 +2,10 @@ package marketplace.domain;
 
 public class Merchant {
 
+	public Merchant()
+	{
+		
+	}
 	
 	public Merchant(String name, int merchantId, String description) {		
 		this.name = name;
@@ -17,8 +21,8 @@ public class Merchant {
 	public String getDescription() {
 		return description;
 	}
-	private final String name;
-	private final int merchantId;
-	private final String description;
+	public String name;
+	public int merchantId;
+	public String description;
 	
 }

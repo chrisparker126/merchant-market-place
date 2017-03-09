@@ -2,6 +2,8 @@ package marketplace.core;
 
 import java.util.Collection;
 
+import org.joda.money.Money;
+
 import marketplace.domain.Merchant;
 import marketplace.domain.MerchantOffer;
 import marketplace.domain.MerchantOfferId;
@@ -24,14 +26,6 @@ public interface IMarketPlace {
 	Merchant getMerchant(int merchantId);
 	
 	/**
-	 * updates the merchant with fields given
-	 * @param merchantName if not null, will update merchant name
-	 * @param description if not null, will update merchant description
-	 * @return the merchant with updated fields, or null if merchant does not exist
-	 */
-	Merchant updateMerchant(int merchantId, String merchantName, String description);
-	
-	/**
 	 * 
 	 * @param merchantName
 	 * @param description
@@ -44,11 +38,10 @@ public interface IMarketPlace {
 	 * @param merchantId id of merchant to create offer for
 	 * @param offerName name of offer
 	 * @param offerDescription offer description
-	 * @param price
-	 * @param currency 3 letter ISO currency code
+	 * @param price TODO
 	 * @return offer if created successfully, null if not
 	 */
-	MerchantOffer createMerchantOffer(int merchantId, String offerName, String offerDescription, String price, String currency);
+	MerchantOffer createMerchantOffer(int merchantId, String offerName, String offerDescription, Money price);
 	
 	/**
 	 * get all the offers for a merchant
@@ -69,7 +62,7 @@ public interface IMarketPlace {
 	 * @param offerId
 	 * @return
 	 */
-	MerchantOffer updateMerchantOffer(MerchantOfferId offerId);
+	MerchantOffer updateMerchantOffer(MerchantOffer offer);
 	
 	/**
 	 * 
@@ -82,11 +75,5 @@ public interface IMarketPlace {
 	 * @param merchantId id of merchant to check if exists
 	 * @return true if merchant exists, false otherwise
 	 */
-	boolean getMerchantExists(int merchantId);
-	
-	/**
-	 * @param offerId id of offer to check if exists
-	 * @return true if merchant offer exists, false otherwise
-	 */
-	boolean getMerchantOfferExists(MerchantOfferId offerId);
+	boolean getMerchantExists(int merchantId);	
 }

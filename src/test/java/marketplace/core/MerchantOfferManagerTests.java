@@ -43,7 +43,7 @@ public class MerchantOfferManagerTests {
 			
 			assertEquals(offer.getDescription(), "a product");
 			assertEquals(offer.getName(), "product1");
-			assertEquals(offer.getPrice(), Money.parse("USD 1.00"));
+			assertEquals(offer.price, Money.parse("USD 1.00"));
 			assertEquals(offer.getMerchantOfferId(), moid);
 			
 		} catch (MerchantOfferManagerException e) {
@@ -74,7 +74,7 @@ public class MerchantOfferManagerTests {
 			
 			assertEquals(offer.getDescription(), "a product");
 			assertEquals(offer.getName(), "product1");
-			assertEquals(offer.getPrice(), Money.parse("USD 1.00"));
+			assertEquals(offer.price, Money.parse("USD 1.00"));
 			assertEquals(offer.getMerchantOfferId(), moid);
 			
 			MerchantOffer offerNull =  offerManager.removeMerchantOffer(moid);
@@ -108,7 +108,7 @@ public class MerchantOfferManagerTests {
 			
 			assertEquals(offer.getDescription(), "a product");
 			assertEquals(offer.getName(), "product1");
-			assertEquals(offer.getPrice(), Money.parse("USD 1.00"));
+			assertEquals(offer.price, Money.parse("USD 1.00"));
 			assertEquals(offer.getMerchantOfferId(), moid);
 			
 		} catch (MerchantOfferManagerException e) {

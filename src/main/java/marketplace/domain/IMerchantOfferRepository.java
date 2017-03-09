@@ -54,4 +54,10 @@ public interface IMerchantOfferRepository {
 	 */
 	public MerchantOffer removeMerchantOffer(MerchantOfferId offerId) ;
 	
+	/**
+	 * 
+	 * @param offer
+	 * @return
+	 */
+	public MerchantOffer updateMerchantOffer(MerchantOffer offer);
 }

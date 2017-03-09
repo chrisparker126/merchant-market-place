@@ -3,8 +3,11 @@ package marketplace.core;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import marketplace.core.IMerchantManager.MerchantManagerException;
+import marketplace.core.IMerchantOfferManager.MerchantOfferManagerException;
 import marketplace.domain.Merchant;
 import marketplace.domain.MerchantOffer;
 import marketplace.domain.MerchantOfferId;
@@ -28,72 +31,93 @@ public class MarketPlace implements IMarketPlace {
 	@Override
 	public Merchant createMerchant(String merchantName, String description) {
 		// TODO Auto-generated method stub
+		try {
+			return merchantManager.createMerchant(merchantName, description);
+		} catch (MerchantManagerException e) {
+			logger.error(e);
+		}
 		return null;
 	}
 
 	@Override
 	public Merchant getMerchant(int merchantId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Merchant updateMerchant(int merchantId, String merchantName, String description) {
-		// TODO Auto-generated method stub
+		try {
+			return merchantManager.getMerchant(merchantId);
+		} catch (MerchantManagerException e) {
+			logger.error(e);
+		}
 		return null;
 	}
 
 	@Override
 	public Merchant deleteMerchant(int merchantId) {
-		// TODO Auto-generated method stub
+		
+		try {
+			return merchantManager.deleteMerchant(merchantId);
+		} catch (MerchantManagerException e) {
+			logger.error(e);
+		}
+		
 		return null;
 	}
 
 	@Override
-	public MerchantOffer createMerchantOffer(int merchantId, String offerName, String offerDescription, String price,
-			String currency) {
-		// TODO Auto-generated method stub
+	public MerchantOffer createMerchantOffer(int merchantId, String offerName, String offerDescription, Money price) {
+	
+		try {
+			return merchantOfferManager.createMerchantOffer(offerName, offerDescription, price, merchantId);
+		} catch (MerchantOfferManagerException e) {
+			logger.error(e);
+		}
 		return null;
 	}
 
 	@Override
 	public Collection<MerchantOffer> getMerchantOffers(int merchantId) {
-		// TODO Auto-generated method stub
+		try {
+			return merchantOfferManager.getMerchantOffers(merchantId);
+		} catch (MerchantOfferManagerException e) {
+			logger.error(e);
+		}
 		return null;
 	}
 
 	@Override
 	public MerchantOffer getMerchantOffer(MerchantOfferId offerId) {
-		// TODO Auto-generated method stub
+		try {
+			return merchantOfferManager.getMerchantOffer(offerId);
+		} catch (MerchantOfferManagerException e) {
+			logger.error(e);
+		}
 		return null;
 	}
 
 	@Override
-	public MerchantOffer updateMerchantOffer(MerchantOfferId offerId) {
-		// TODO Auto-generated method stub
+	public MerchantOffer updateMerchantOffer(MerchantOffer offer) {
+
+		try {
+			return merchantOfferManager.updateMerchantOffer(offer);
+		} catch (MerchantOfferManagerException e) {
+			logger.error(e);
+		}
 		return null;
 	}
 
 	@Override
 	public MerchantOffer deleteMerchantOffer(MerchantOfferId offerId) {
-		// TODO Auto-generated method stub
+
+		try {
+			return merchantOfferManager.removeMerchantOffer(offerId);
+		} catch (MerchantOfferManagerException e) {
+			logger.error(e);
+		}
 		return null;
 	}
 
 	@Override
 	public boolean getMerchantExists(int merchantId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public boolean getMerchantOfferExists(MerchantOfferId offerId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	
-	
-	
+		return merchantManager.getMerchantExists(merchantId);
+	}	
 
 }

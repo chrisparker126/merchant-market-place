@@ -24,4 +24,6 @@ public interface IMerchantOfferManager {
 			throws MerchantOfferManagerException;;
 	public MerchantOffer getMerchantOffer(MerchantOfferId merchantOfferId)
 					throws MerchantOfferManagerException;
+	public MerchantOffer updateMerchantOffer(MerchantOffer offer)
+			throws MerchantOfferManagerException;
 }

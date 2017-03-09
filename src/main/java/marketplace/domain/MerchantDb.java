@@ -4,21 +4,21 @@ import java.util.TreeMap;
 
 public class MerchantDb implements IMerchantRepository, IMerchantInfoRepository {
 
-	@Override
-	public Merchant updateMerchant(int merchantId, String name, String description) {
-		// TODO Auto-generated method stub
-		Merchant merchant = getMerchant(merchantId);
-		
-		if(merchant == null)
-			return null;
-		
-		Merchant updatedMerchant = 
-				new Merchant(name != null ? name : merchant.getName(), merchantId, 
-						description != null ? description : merchant.getDescription());
-		
-		merchants.put(merchantId, updatedMerchant);
-		return updatedMerchant;
-	}
+//	@Override
+//	public Merchant updateMerchant(int merchantId, String name, String description) {
+//		// TODO Auto-generated method stub
+//		Merchant merchant = getMerchant(merchantId);
+//		
+//		if(merchant == null)
+//			return null;
+//		
+//		Merchant updatedMerchant = 
+//				new Merchant(name != null ? name : merchant.getName(), merchantId, 
+//						description != null ? description : merchant.getDescription());
+//		
+//		merchants.put(merchantId, updatedMerchant);
+//		return updatedMerchant;
+//	}
 
 	@Override
 	public boolean getDoesMerchantExist(int merchantId) {
@@ -50,4 +50,9 @@ public class MerchantDb implements IMerchantRepository, IMerchantInfoRepository 
 	}
 
 	private TreeMap<Integer, Merchant> merchants = new TreeMap<Integer, Merchant>();
+
+	@Override
+	public boolean getMerchantExists(int merchantId) {
+		return getDoesMerchantExist(merchantId);
+	}
 }

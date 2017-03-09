@@ -20,12 +20,17 @@ public class MerchantManager implements IMerchantManager {
 	private IMerchantRepository repository = null;
 			
 	@Override
-	public Merchant createMerchant(String name, String description) throws MerchantManagerException {		
+	public Merchant createMerchant(String name, String description) throws MerchantManagerException {
+		
+		logger.info("Creating merchant with name: " + name);
+		
 		try
 		{
 			synchronized (this) {			
 				int newMerchantId = repository.getTopMerchantId() + 1;
-				return repository.addMerchant(new Merchant(name, newMerchantId, description));
+				Merchant m = new Merchant(name, newMerchantId, description);
+				repository.addMerchant(m);
+				return m;
 			}
 						
 		}catch(Exception e)
@@ -37,23 +42,30 @@ public class MerchantManager implements IMerchantManager {
 	@Override
 	public Merchant deleteMerchant(int merchantId) throws MerchantManagerException {
 
+		logger.info("Deleting merchant with Id: " + merchantId);
+		
 		synchronized (this) {	
 			return repository.deleteMerchant(merchantId);
 		}
 	}
 
-	@Override
-	public void changeMerchangeName(int merchantId, String name) throws MerchantManagerException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public Merchant getMerchant(int merchantId) throws MerchantManagerException {
 
+		logger.info("Retrieving merchant with Id: " + merchantId);
+		
 		synchronized (this) {
 			return repository.getMerchant(merchantId);
 		}
+	}
+
+	@Override
+	public boolean getMerchantExists(int merchantId) {
+		synchronized (this) {
+			return repository.getMerchantExists(merchantId);
+		}
+		
 	}
 
 }
