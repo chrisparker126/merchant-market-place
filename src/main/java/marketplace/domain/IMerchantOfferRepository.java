@@ -28,7 +28,7 @@ public interface IMerchantOfferRepository {
 	 * @return
 	 * @throws IOException
 	 */
-	public MerchantOfferId getTopMerhantOfferIdForMerchantId(int merchantId) ;
+	public MerchantOfferId getTopMerhantOfferIdForMerchantId(Integer merchantId) ;
 	
 	/**
 	 * retrieves a particular offer for a merchant
@@ -41,10 +41,9 @@ public interface IMerchantOfferRepository {
 	/**
 	 * retrieves offers a merchant has
 	 * @param merchantId the id of the merchant whom to retrieve offers for
-	 * @return
-	 * @throws IOException
+	 * @return if not offers exist, returns an empty collection
 	 */
-	public Collection<MerchantOffer> getMerchantOffers(int merchantId) ;
+	public Collection<MerchantOffer> getMerchantOffers(Integer merchantId) ;
 	
 	/**
 	 * 

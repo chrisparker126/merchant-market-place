@@ -70,7 +70,8 @@ public class MerchantOfferDbTests {
 		db.addMerchantOffer(new MerchantOffer(
 				"product2", "a 2nd product", moid3, Money.parse("USD 1.00")));
 		
-		assertEquals(db.getTopMerhantOfferIdForMerchantId(2).getOfferId(), 2);
+		Integer offerId = db.getTopMerhantOfferIdForMerchantId(2).getOfferId();
+		assertEquals(offerId.intValue(), 2);
 	}
 
 	@Test

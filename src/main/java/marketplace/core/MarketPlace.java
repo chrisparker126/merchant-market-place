@@ -40,7 +40,7 @@ public class MarketPlace implements IMarketPlace {
 	}
 
 	@Override
-	public Merchant getMerchant(int merchantId) {
+	public Merchant getMerchant(Integer merchantId) {
 		try {
 			return merchantManager.getMerchant(merchantId);
 		} catch (MerchantManagerException e) {
@@ -50,7 +50,7 @@ public class MarketPlace implements IMarketPlace {
 	}
 
 	@Override
-	public Merchant deleteMerchant(int merchantId) {
+	public Merchant deleteMerchant(Integer merchantId) {
 		
 		try {
 			return merchantManager.deleteMerchant(merchantId);
@@ -62,7 +62,7 @@ public class MarketPlace implements IMarketPlace {
 	}
 
 	@Override
-	public MerchantOffer createMerchantOffer(int merchantId, String offerName, String offerDescription, Money price) {
+	public MerchantOffer createMerchantOffer(Integer merchantId, String offerName, String offerDescription, Money price) {
 	
 		try {
 			return merchantOfferManager.createMerchantOffer(offerName, offerDescription, price, merchantId);
@@ -73,7 +73,7 @@ public class MarketPlace implements IMarketPlace {
 	}
 
 	@Override
-	public Collection<MerchantOffer> getMerchantOffers(int merchantId) {
+	public Collection<MerchantOffer> getMerchantOffers(Integer merchantId) {
 		try {
 			return merchantOfferManager.getMerchantOffers(merchantId);
 		} catch (MerchantOfferManagerException e) {
@@ -115,7 +115,7 @@ public class MarketPlace implements IMarketPlace {
 	}
 
 	@Override
-	public boolean getMerchantExists(int merchantId) {
+	public boolean getMerchantExists(Integer merchantId) {
 
 		return merchantManager.getMerchantExists(merchantId);
 	}	

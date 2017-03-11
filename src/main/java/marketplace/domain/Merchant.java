@@ -7,7 +7,7 @@ public class Merchant {
 		
 	}
 	
-	public Merchant(String name, int merchantId, String description) {		
+	public Merchant(String name, Integer merchantId, String description) {		
 		this.name = name;
 		this.merchantId = merchantId;
 		this.description = description;
@@ -22,7 +22,7 @@ public class Merchant {
 		return description;
 	}
 	public String name;
-	public int merchantId;
+	public Integer merchantId;
 	public String description;
 	
 }

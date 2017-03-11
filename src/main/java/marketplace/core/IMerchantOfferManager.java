@@ -17,10 +17,10 @@ public interface IMerchantOfferManager {
 	}
 	
 	public MerchantOffer createMerchantOffer(String name, String description, 
-			Money price, int merchantId) throws MerchantOfferManagerException;
+			Money price, Integer merchantId) throws MerchantOfferManagerException;
 	public MerchantOffer removeMerchantOffer(MerchantOfferId merchantOfferId) 
 	throws MerchantOfferManagerException;
-	public Collection<MerchantOffer> getMerchantOffers(int merchantId)
+	public Collection<MerchantOffer> getMerchantOffers(Integer merchantId)
 			throws MerchantOfferManagerException;;
 	public MerchantOffer getMerchantOffer(MerchantOfferId merchantOfferId)
 					throws MerchantOfferManagerException;

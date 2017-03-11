@@ -23,7 +23,7 @@ public interface IMarketPlace {
 	 * @param merchantId id of merchant to get
 	 * @return merchant or null if merchant does not exist
 	 */
-	Merchant getMerchant(int merchantId);
+	Merchant getMerchant(Integer merchantId);
 	
 	/**
 	 * 
@@ -31,7 +31,7 @@ public interface IMarketPlace {
 	 * @param description
 	 * @return the deleted merchant or null if merchant does not exist
 	 */
-	Merchant deleteMerchant(int merchantId);
+	Merchant deleteMerchant(Integer merchantId);
 	
 	/**
 	 * 
@@ -41,14 +41,14 @@ public interface IMarketPlace {
 	 * @param price TODO
 	 * @return offer if created successfully, null if not
 	 */
-	MerchantOffer createMerchantOffer(int merchantId, String offerName, String offerDescription, Money price);
+	MerchantOffer createMerchantOffer(Integer merchantId, String offerName, String offerDescription, Money price);
 	
 	/**
 	 * get all the offers for a merchant
 	 * @param merchantId
 	 * @return merchants' offers or null if merchant does not exist or merchant has not offers
 	 */
-	Collection<MerchantOffer> getMerchantOffers(int merchantId);
+	Collection<MerchantOffer> getMerchantOffers(Integer merchantId);
 	
 
 	/**
@@ -58,9 +58,9 @@ public interface IMarketPlace {
 	MerchantOffer getMerchantOffer(MerchantOfferId offerId);
 	
 	/**
-	 * 
-	 * @param offerId
-	 * @return
+	 * Updates a merchants offer
+	 * @param fields not be updated are set to null
+	 * @return null if offer does not exist for merchant 
 	 */
 	MerchantOffer updateMerchantOffer(MerchantOffer offer);
 	
@@ -75,5 +75,5 @@ public interface IMarketPlace {
 	 * @param merchantId id of merchant to check if exists
 	 * @return true if merchant exists, false otherwise
 	 */
-	boolean getMerchantExists(int merchantId);	
+	boolean getMerchantExists(Integer merchantId);	
 }

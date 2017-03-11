@@ -21,7 +21,7 @@ public class MerchantDb implements IMerchantRepository, IMerchantInfoRepository 
 //	}
 
 	@Override
-	public boolean getDoesMerchantExist(int merchantId) {
+	public boolean getDoesMerchantExist(Integer merchantId) {
 		return merchants.containsKey(merchantId);
 	}
 
@@ -40,19 +40,19 @@ public class MerchantDb implements IMerchantRepository, IMerchantInfoRepository 
 	}
 
 	@Override
-	public Merchant getMerchant(int merchantId) {
+	public Merchant getMerchant(Integer merchantId) {
 		return merchants.get(merchantId);
 	}
 
 	@Override
-	public Merchant deleteMerchant(int merchantId) {
+	public Merchant deleteMerchant(Integer merchantId) {
 		return merchants.remove(merchantId);
 	}
 
 	private TreeMap<Integer, Merchant> merchants = new TreeMap<Integer, Merchant>();
 
 	@Override
-	public boolean getMerchantExists(int merchantId) {
+	public boolean getMerchantExists(Integer merchantId) {
 		return getDoesMerchantExist(merchantId);
 	}
 }

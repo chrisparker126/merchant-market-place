@@ -3,7 +3,7 @@ package marketplace.domain;
 public class MerchantOfferId
 {
 	public MerchantOfferId(){}
-	public MerchantOfferId(int merchantId, int offerId) {
+	public MerchantOfferId(Integer merchantId, Integer offerId) {
 		super();
 		this.merchantId = merchantId;
 		this.offerId = offerId;
@@ -20,12 +20,12 @@ public class MerchantOfferId
 		return super.hashCode();
 	}
 	
-	public int getMerchantId() {
+	public Integer getMerchantId() {
 		return merchantId;
 	}
-	public int getOfferId() {
+	public Integer getOfferId() {
 		return offerId;
 	}
-	public int merchantId;
-	public int offerId;
+	public Integer merchantId;
+	public Integer offerId;
 }

@@ -3,25 +3,13 @@ package marketplace.domain;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 
 public class MerchantOfferDb implements IMerchantOfferRepository {
 
-	@Override
-	public Collection<MerchantOffer> getMerchantOffers(int merchantId) {
-
-		SortedMap<Integer, MerchantOffer> merchantOffers =  merchantOffersMap.get(merchantId);
-		if(merchantOffers == null)
-		{
-			return null;
-			
-		}else
-		{
-			return merchantOffers.values();
-		}			
-	}
 
 	@Override
 	public MerchantOffer removeMerchantOffer(MerchantOfferId offerId) {
@@ -60,7 +48,7 @@ public class MerchantOfferDb implements IMerchantOfferRepository {
 	}
 
 	@Override
-	public MerchantOfferId getTopMerhantOfferIdForMerchantId(int merchantId) {
+	public MerchantOfferId getTopMerhantOfferIdForMerchantId(Integer merchantId) {
 
 		SortedMap<Integer, MerchantOffer> merchantOffers =  merchantOffersMap.get(merchantId);
 		if(merchantOffers == null)
@@ -115,9 +103,25 @@ public class MerchantOfferDb implements IMerchantOfferRepository {
 		return offer;
 	}
 
+	@Override
+	public Collection<MerchantOffer> getMerchantOffers(Integer merchantId) {
+
+		SortedMap<Integer, MerchantOffer> merchantOffers =  merchantOffersMap.get(merchantId);
+		if(merchantOffers == null)
+		{
+			return new LinkedList<MerchantOffer>();
+			
+		}else
+		{
+			return merchantOffers.values();
+		}			
+	}
 	
 	private HashMap<Integer, SortedMap<Integer, MerchantOffer> > merchantOffersMap = new
 			HashMap<Integer, SortedMap<Integer, MerchantOffer> >();
+
+
+
 
 	
 }

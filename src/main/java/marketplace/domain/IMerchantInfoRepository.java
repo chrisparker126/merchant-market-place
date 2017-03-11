@@ -7,6 +7,6 @@ package marketplace.domain;
  * @author Chris.Parker
  */
 public interface IMerchantInfoRepository {
-	Merchant getMerchant(int merchantId) ;
-	boolean getDoesMerchantExist(int merchantId) ;
+	Merchant getMerchant(Integer merchantId) ;
+	boolean getDoesMerchantExist(Integer merchantId) ;
 }

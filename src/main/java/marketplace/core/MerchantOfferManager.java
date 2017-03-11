@@ -31,7 +31,7 @@ public class MerchantOfferManager implements IMerchantOfferManager {
 	}
 	
 	@Override
-	public MerchantOffer createMerchantOffer(String name, String description, Money price, int merchantId)
+	public MerchantOffer createMerchantOffer(String name, String description, Money price, Integer merchantId)
 			throws MerchantOfferManagerException {
 	
 		// first check merchant exists
@@ -67,7 +67,7 @@ public class MerchantOfferManager implements IMerchantOfferManager {
 	}
 
 	@Override
-	public Collection<MerchantOffer> getMerchantOffers(int merchantId) 
+	public Collection<MerchantOffer> getMerchantOffers(Integer merchantId) 
 			throws MerchantOfferManagerException
 	{
 		synchronized (this) {

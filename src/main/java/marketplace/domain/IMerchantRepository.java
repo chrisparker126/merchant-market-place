@@ -4,7 +4,7 @@ public interface IMerchantRepository {
 
 	public Merchant addMerchant(Merchant merchant) ;
 	public int getTopMerchantId() ;
-	public Merchant getMerchant(int merchantId) ;
-	public Merchant deleteMerchant(int merchantId) ;	
-	public boolean getMerchantExists(int merchantId);
+	public Merchant getMerchant(Integer merchantId) ;
+	public Merchant deleteMerchant(Integer merchantId) ;	
+	public boolean getMerchantExists(Integer merchantId);
 }

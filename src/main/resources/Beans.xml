@@ -2,29 +2,40 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+	<beans profile="production">
+	   <bean id="marketPlaceController" class="marketplace.controllers.MarketPlaceController">
+	      <constructor-arg ref="marketPlace"/>
+	   </bean>
+	
+	   <bean id="marketPlace" class="marketplace.core.MarketPlace">
+		   <constructor-arg ref="merchantManager"/>
+		   <constructor-arg ref="merchantOfferManager"/>
+	   </bean>
+	   
+	   <bean id="merchantManager" class="marketplace.core.MerchantManager">
+		   <constructor-arg ref="merchantDb"/>
+	   </bean>
+	   
+	   <bean id="merchantOfferManager" class="marketplace.core.MerchantOfferManager">
+		   <constructor-arg ref="merchantOfferDb"/>
+		   <constructor-arg ref="merchantDb"/>
+	   </bean>
+	
+	   <bean id="merchantDb" class="marketplace.domain.MerchantDb">
+	   </bean>
+	   
+	   <bean id="merchantOfferDb" class="marketplace.domain.MerchantOfferDb">
+	   </bean>
+	</beans>
+	<beans profile="test">
+	   <bean id="marketPlaceController"
+	   	class="marketplace.controllers.MarketPlaceController">
+	      <constructor-arg ref="mockMarketPlace"/>
+	   </bean>
 
-
-   <bean id="marketPlaceController" class="marketplace.controllers.MarketPlaceController">
-      <constructor-arg ref="marketPlace"/>
-   </bean>
-
-   <bean id="marketPlace" class="marketplace.core.MarketPlace">
-	   <constructor-arg ref="merchantManager"/>
-	   <constructor-arg ref="merchantOfferManager"/>
-   </bean>
-   
-   <bean id="merchantManager" class="marketplace.core.MerchantManager">
-	   <constructor-arg ref="merchantDb"/>
-   </bean>
-   
-   <bean id="merchantOfferManager" class="marketplace.core.MerchantOfferManager">
-	   <constructor-arg ref="merchantOfferDb"/>
-	   <constructor-arg ref="merchantDb"/>
-   </bean>
-
-   <bean id="merchantDb" class="marketplace.domain.MerchantDb">
-   </bean>
-   
-   <bean id="merchantOfferDb" class="marketplace.domain.MerchantOfferDb">
-   </bean>
+	   <bean id="mockMarketPlace" class="marketplace.controllers.MockMarketPlaceFactory" factory-method="getInstance">
+			 
+	   </bean>
+	
+	</beans>
 </beans>
