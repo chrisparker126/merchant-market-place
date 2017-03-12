@@ -20,8 +20,22 @@ The "production" bean profile is required to run the app
 
 # API
 
-|   dss | dada |
-|......:|:----:|
-| ddd   |   ss |   
+1. Create Merchant 
+..* url : /merchant 
+..* method: POST
+..* Data Params (media type: JSON)
+...* name [string] required
+...* description [string] optional 
+2. Get Merchant
+..* url : /merchant/:id
+...* :id [integer] 
+..* method: GET
+..* Data Params none 
+3. Delete Merchant
+4. Create Merchant Offer
+5. Get Merchant Offer
+5. Delete Merchant Offer
+6. Update Merchant Offer
+
 
 ## Error
