@@ -198,3 +198,9 @@ A json body is returned in most error response status codes.
 * 2, merchant offer does not exist
 * 3, invalid parameters
 * 4, invalid path values
+
+## Example
+
+Getting a merchants' offers running on local host
+
+  * http://localhost:8080/merchant/1/offers
