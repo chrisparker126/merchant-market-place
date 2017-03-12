@@ -1,4 +1,4 @@
-# merchant-market-place
+# Merchant Market Place
 
 The merchant market place REST app allows clients to create an instance of merchant 
 
