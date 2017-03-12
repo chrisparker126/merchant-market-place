@@ -30,7 +30,6 @@ public class MarketPlace implements IMarketPlace {
 
 	@Override
 	public Merchant createMerchant(String merchantName, String description) {
-		// TODO Auto-generated method stub
 		try {
 			return merchantManager.createMerchant(merchantName, description);
 		} catch (MerchantManagerException e) {

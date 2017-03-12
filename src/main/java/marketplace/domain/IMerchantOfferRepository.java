@@ -16,9 +16,7 @@ public interface IMerchantOfferRepository {
 	/**
 	 * Adds an offer for a merchant 
 	 * @param offer the merchant id and offer id should be unique
-	 * @return TODO
-	 * @throws AlreadyExistException
-	 * @throws IOException
+	 * @return the offer that has been added
 	 */
 	public MerchantOffer addMerchantOffer(MerchantOffer offer) ;
 	
@@ -28,7 +26,7 @@ public interface IMerchantOfferRepository {
 	 * @return
 	 * @throws IOException
 	 */
-	public MerchantOfferId getTopMerhantOfferIdForMerchantId(Integer merchantId) ;
+	public MerchantOfferId getTopMerhantOfferIdForMerchantId(Integer merchantOfferId) ;
 	
 	/**
 	 * retrieves a particular offer for a merchant
@@ -49,7 +47,6 @@ public interface IMerchantOfferRepository {
 	 * 
 	 * @param offerId
 	 * @return null if offer did not exist, or value of offer that has been deleted
-	 * @throws IOException
 	 */
 	public MerchantOffer removeMerchantOffer(MerchantOfferId offerId) ;
 	

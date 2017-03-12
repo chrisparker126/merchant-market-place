@@ -34,8 +34,6 @@ public class MerchantOfferManager implements IMerchantOfferManager {
 	public MerchantOffer createMerchantOffer(String name, String description, Money price, Integer merchantId)
 			throws MerchantOfferManagerException {
 	
-		// first check merchant exists
-		
 		synchronized (this) {
 			
 			try {

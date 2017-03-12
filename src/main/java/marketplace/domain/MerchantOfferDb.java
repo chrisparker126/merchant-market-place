@@ -39,8 +39,7 @@ public class MerchantOfferDb implements IMerchantOfferRepository {
 		if(merchantOffers == null)
 		{
 			merchantOffers = new TreeMap<Integer, MerchantOffer>();
-			merchantOffersMap.put(mid, merchantOffers);
-			
+			merchantOffersMap.put(mid, merchantOffers);			
 		}
 		
 		merchantOffers.put(oid, offer);	
@@ -53,11 +52,16 @@ public class MerchantOfferDb implements IMerchantOfferRepository {
 		SortedMap<Integer, MerchantOffer> merchantOffers =  merchantOffersMap.get(merchantId);
 		if(merchantOffers == null)
 		{
-			return new MerchantOfferId(merchantId, 1);
+			return new MerchantOfferId(merchantId, 0);
 			
 		}else
 		{
-			return new MerchantOfferId(merchantId, merchantOffers.lastKey()); 
+			Integer lastKey = 0;
+			
+			if(!merchantOffers.isEmpty())
+				lastKey = merchantOffers.lastKey();
+			
+			return new MerchantOfferId(merchantId, lastKey); 
 		}			
 	}
 

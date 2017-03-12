@@ -2,7 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
 	<beans profile="production">
+	
 	   <bean id="marketPlaceController" class="marketplace.controllers.MarketPlaceController">
 	      <constructor-arg ref="marketPlace"/>
 	   </bean>
@@ -27,6 +29,7 @@
 	   <bean id="merchantOfferDb" class="marketplace.domain.MerchantOfferDb">
 	   </bean>
 	</beans>
+	
 	<beans profile="test">
 	   <bean id="marketPlaceController"
 	   	class="marketplace.controllers.MarketPlaceController">
@@ -36,6 +39,5 @@
 	   <bean id="mockMarketPlace" class="marketplace.controllers.MockMarketPlaceFactory" factory-method="getInstance">
 			 
 	   </bean>
-	
-	</beans>
+   </beans>
 </beans>

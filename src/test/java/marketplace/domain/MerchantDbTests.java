@@ -31,7 +31,7 @@ public class MerchantDbTests {
 		db.addMerchant(new Merchant("merchant1", 1, "description"));
 		db.addMerchant(new Merchant("merchant1", 2, "description"));
 		
-		assertEquals(db.getTopMerchantId(), 2);
+		assertEquals(db.getTopMerchantId().intValue(), 2);
 	}
 
 	@Test

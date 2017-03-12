@@ -4,13 +4,20 @@ package marketplace.controllers;
 
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import marketplace.core.IMarketPlace;
 import marketplace.domain.MarketPlaceError;
@@ -21,8 +28,11 @@ import marketplace.domain.MerchantOfferId;
 
 
 @RestController
+@ImportResource("classpath:Beans.xml")
 public class MarketPlaceController {
 
+	@Autowired
+	private IMarketPlace marketPlace;
 
 	
 	public MarketPlaceController(IMarketPlace marketPlace) {
@@ -30,6 +40,23 @@ public class MarketPlaceController {
 		this.marketPlace = marketPlace;
 	}
 
+	
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	ResponseEntity<?> handlePathVariableError()
+	{		  
+		return new ResponseEntity< MarketPlaceError >(new 
+			MarketPlaceError(MarketPlaceErrorCodes.INVALID_PATH_VALUES), 
+			HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	ResponseEntity<?> cantReadExeption()
+	{	
+		return new ResponseEntity< MarketPlaceError >(new 
+				MarketPlaceError(MarketPlaceErrorCodes.INVALID_PARAMETERS), 
+				HttpStatus.BAD_REQUEST);
+	}
+	
 	@RequestMapping(value="/merchant", method=RequestMethod.POST,
 			produces="application/json", consumes="application/json")
 	public ResponseEntity<?> createMerchant(
@@ -131,7 +158,7 @@ public class MarketPlaceController {
 					HttpStatus.NOT_FOUND);
 				
 		MerchantOffer createdOffer = marketPlace.createMerchantOffer(
-				mid, offer.getName(), offer.getDescription(), null);
+				mid, offer.getName(), offer.getDescription(), offer.getPrice());
 		
 		return new ResponseEntity<MerchantOffer>(createdOffer, HttpStatus.OK);
 	}
@@ -165,7 +192,32 @@ public class MarketPlaceController {
 					MarketPlaceError(MarketPlaceErrorCodes.MERCHANT_DOES_NOT_EXIST), 
 					HttpStatus.NOT_FOUND);		
 	}
+
+	@RequestMapping(value="/merchant/{mid}/offer/{oid}", method=RequestMethod.DELETE, 
+			produces="application/json")
+	public ResponseEntity<?> deleteOffer(
+			@PathVariable Integer mid, @PathVariable Integer oid)
+	{
+		if(marketPlace.getMerchantExists(mid))
+		{
+			MerchantOfferId moid = new MerchantOfferId(mid, oid);
+			
+			MerchantOffer deletedOffer = marketPlace.deleteMerchantOffer(moid);
+			
+			if(deletedOffer == null)
+				return new ResponseEntity< MarketPlaceError >(new 
+						MarketPlaceError(MarketPlaceErrorCodes.OFFER_DOES_NOT_EXIST), 
+						HttpStatus.NOT_FOUND);
+			else
+				return new ResponseEntity< MerchantOffer >(deletedOffer, 
+						HttpStatus.OK);
+			
+		}
+		else
+			return new ResponseEntity< MarketPlaceError >(new 
+					MarketPlaceError(MarketPlaceErrorCodes.MERCHANT_DOES_NOT_EXIST), 
+					HttpStatus.NOT_FOUND);		
+	}
 	
-	@Autowired
-	private IMarketPlace marketPlace;
+	
 }

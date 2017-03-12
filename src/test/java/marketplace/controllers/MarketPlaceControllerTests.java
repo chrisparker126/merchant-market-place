@@ -1,11 +1,7 @@
 package marketplace.controllers;
 
-import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.anyOf;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -15,22 +11,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Collection;
-
-import org.joda.money.Money;
 import org.json.JSONObject;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import marketplace.core.IMarketPlace;
@@ -43,7 +33,7 @@ import marketplace.domain.MerchantOffer;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ImportResource("classpath:Beans.xml")
-@ActiveProfiles(profiles="test")
+@ActiveProfiles("test")
 public class MarketPlaceControllerTests {
 	
     @Autowired
@@ -63,8 +53,7 @@ public class MarketPlaceControllerTests {
         this.mockMvc.perform(post("/merchant").contentType(MediaType.APPLICATION_JSON)
         		.content(createMerchant)).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("merchant1"));
-    }
-    
+    }    
     
     @Test
     public void getMerchantTest() throws Exception {

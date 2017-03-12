@@ -31,7 +31,7 @@ public class MerchantDb implements IMerchantRepository, IMerchantInfoRepository 
 	}
 
 	@Override
-	public int getTopMerchantId() {
+	public Integer getTopMerchantId() {
 		
 		if(merchants.isEmpty())
 			return 0;
