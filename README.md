@@ -25,7 +25,7 @@ The "production" bean profile is required to run the app
 # API
 
 1. Create Merchant 
-  * url : /merchant 
+  * **URL** /merchant 
   * method: **POST**
   * Data Params (media type: JSON)
     * name [string] required
@@ -43,7 +43,7 @@ The "production" bean profile is required to run the app
 	
          
 2. Get Merchant
-  * url /merchant/:id
+  * **URL** /merchant/:id
     * :id [integer] 
   * method: **GET**
   * Data Params none
@@ -60,7 +60,7 @@ The "production" bean profile is required to run the app
     * content JSON see merchant place error
  
 3. Delete Merchant
-  * url /merchant/:id
+  * URL /merchant/:id
     * :id [integer] 
   * method: **DELETE**
   * Data Params none
@@ -77,7 +77,7 @@ The "production" bean profile is required to run the app
     * content JSON see merchant place error
     
 4. Create Merchant Offer
-  * url : /merchant/:id/offer 
+  * **URL** /merchant/:id/offer 
   * method: **POST**
   * Data Params (media type: JSON)
     * name [string] required
@@ -103,7 +103,7 @@ The "production" bean profile is required to run the app
     * content JSON see merchant place error
 	
 5. Get Merchant Offer
-  * url /merchant/:id/offer/:oid
+  * **URL** /merchant/:id/offer/:oid
     * :id [integer] merchant id
     * :oid [integer] offer id
   * method: **GET**
@@ -125,7 +125,7 @@ The "production" bean profile is required to run the app
       * 404 Not found
     * content JSON see merchant place error
 6. Get merchant offers
-  * url /merchant/:id/offers
+  * **URL** /merchant/:id/offers
     * :id [integer] merchant id
   * method: **GET**
   * Data Params none
@@ -145,7 +145,7 @@ The "production" bean profile is required to run the app
       * 404 Not found
     * content JSON see merchant place error 
 7. Delete Merchant Offer
-  * url /merchant/:id/offer/:oid
+  * **URL** /merchant/:id/offer/:oid
     * :id [integer] merchant id
     * :oid [integer] offer id
   * method: **DELETE**
@@ -167,7 +167,7 @@ The "production" bean profile is required to run the app
       * 404 Not found
     * content JSON see merchant place error
 8. Update Merchant Offer
-  * url /merchant/:id/offer/:oid
+  * **URL** /merchant/:id/offer/:oid
     * :id [integer] merchant id
     * :oid [integer] offer id
   * method: **PUT**
@@ -184,9 +184,9 @@ The "production" bean profile is required to run the app
     * status 
       * 400 Bad Request
       * 404 Not found
-    * content JSON see merchant place error
+    * content JSON see Error topic below
 
-## Error
+## Errors
 
 A json body is returned in most error response status codes. 
 
