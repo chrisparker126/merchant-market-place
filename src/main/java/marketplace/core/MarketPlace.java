@@ -12,6 +12,11 @@ import marketplace.domain.Merchant;
 import marketplace.domain.MerchantOffer;
 import marketplace.domain.MerchantOfferId;
 
+/**
+ * Thread safe implementation of market place interface
+ * @author Chris.Parker
+ *
+ */
 public class MarketPlace implements IMarketPlace {
 
 	public MarketPlace(IMerchantManager merchantManager, IMerchantOfferManager merchantOfferManager) {
@@ -31,7 +36,10 @@ public class MarketPlace implements IMarketPlace {
 	@Override
 	public Merchant createMerchant(String merchantName, String description) {
 		try {
-			return merchantManager.createMerchant(merchantName, description);
+
+			synchronized (this) {
+				return merchantManager.createMerchant(merchantName, description);
+			}
 		} catch (MerchantManagerException e) {
 			logger.error(e);
 		}
@@ -41,7 +49,9 @@ public class MarketPlace implements IMarketPlace {
 	@Override
 	public Merchant getMerchant(Integer merchantId) {
 		try {
-			return merchantManager.getMerchant(merchantId);
+			synchronized (this) {
+				return merchantManager.getMerchant(merchantId);
+			}
 		} catch (MerchantManagerException e) {
 			logger.error(e);
 		}
@@ -52,7 +62,9 @@ public class MarketPlace implements IMarketPlace {
 	public Merchant deleteMerchant(Integer merchantId) {
 		
 		try {
-			return merchantManager.deleteMerchant(merchantId);
+			synchronized (this) {
+				return merchantManager.deleteMerchant(merchantId);
+			}
 		} catch (MerchantManagerException e) {
 			logger.error(e);
 		}
@@ -64,7 +76,9 @@ public class MarketPlace implements IMarketPlace {
 	public MerchantOffer createMerchantOffer(Integer merchantId, String offerName, String offerDescription, Money price) {
 	
 		try {
-			return merchantOfferManager.createMerchantOffer(offerName, offerDescription, price, merchantId);
+			synchronized (this) {
+				return merchantOfferManager.createMerchantOffer(offerName, offerDescription, price, merchantId);
+			}
 		} catch (MerchantOfferManagerException e) {
 			logger.error(e);
 		}
@@ -74,7 +88,9 @@ public class MarketPlace implements IMarketPlace {
 	@Override
 	public Collection<MerchantOffer> getMerchantOffers(Integer merchantId) {
 		try {
-			return merchantOfferManager.getMerchantOffers(merchantId);
+			synchronized (this) {
+				return merchantOfferManager.getMerchantOffers(merchantId);
+			}
 		} catch (MerchantOfferManagerException e) {
 			logger.error(e);
 		}
@@ -84,7 +100,9 @@ public class MarketPlace implements IMarketPlace {
 	@Override
 	public MerchantOffer getMerchantOffer(MerchantOfferId offerId) {
 		try {
-			return merchantOfferManager.getMerchantOffer(offerId);
+			synchronized (this) {
+				return merchantOfferManager.getMerchantOffer(offerId);
+			}
 		} catch (MerchantOfferManagerException e) {
 			logger.error(e);
 		}
@@ -95,10 +113,13 @@ public class MarketPlace implements IMarketPlace {
 	public MerchantOffer updateMerchantOffer(MerchantOffer offer) {
 
 		try {
-			return merchantOfferManager.updateMerchantOffer(offer);
+			synchronized (this) {
+				return merchantOfferManager.updateMerchantOffer(offer);
+			}
 		} catch (MerchantOfferManagerException e) {
 			logger.error(e);
-		}
+		} 
+		
 		return null;
 	}
 
@@ -106,7 +127,9 @@ public class MarketPlace implements IMarketPlace {
 	public MerchantOffer deleteMerchantOffer(MerchantOfferId offerId) {
 
 		try {
-			return merchantOfferManager.removeMerchantOffer(offerId);
+			synchronized (this) {
+				return merchantOfferManager.removeMerchantOffer(offerId);
+			}
 		} catch (MerchantOfferManagerException e) {
 			logger.error(e);
 		}
@@ -115,8 +138,9 @@ public class MarketPlace implements IMarketPlace {
 
 	@Override
 	public boolean getMerchantExists(Integer merchantId) {
-
-		return merchantManager.getMerchantExists(merchantId);
+		synchronized (this) {
+			return merchantManager.getMerchantExists(merchantId);
+		}
 	}	
 
 }

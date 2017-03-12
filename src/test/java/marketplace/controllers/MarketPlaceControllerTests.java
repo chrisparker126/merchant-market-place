@@ -137,6 +137,24 @@ public class MarketPlaceControllerTests {
     @Test
     public void deleteMerchantOfferTest() throws Exception {
 
-
+    	IMarketPlace marketPlace = MockMarketPlaceFactory.marketPlace;
+    	
+    	reset(marketPlace);
+    	
+    	when(marketPlace.getMerchantExists(5))
+     	 .thenReturn(true);
+    	
+    	when(marketPlace.deleteMerchantOffer(any())).thenReturn(null);
+    			
+        this.mockMvc.perform(delete("/merchant/5/offer/2"))
+        		.andDo(print()).andExpect(status().is4xxClientError())
+        .andExpect(jsonPath("$.errorCode").value(2));
+        
+        when(marketPlace.getMerchantOffer(any())).thenReturn(
+        		new MerchantOffer("pdd2", null, null, null));
+        
+        this.mockMvc.perform(get("/merchant/1/offer/2"))
+		.andDo(print()).andExpect(status().isOk())
+		.andExpect(jsonPath("$.name").value("pdd2"));
     }
 }

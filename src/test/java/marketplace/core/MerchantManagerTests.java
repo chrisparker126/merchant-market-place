@@ -2,6 +2,8 @@ package marketplace.core;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+
 import marketplace.domain.IMerchantRepository;
 import marketplace.domain.Merchant;
 
@@ -50,7 +52,30 @@ public class MerchantManagerTests {
 		{
 			logger.warn(e);
 		}
+		
+
 	}
 	
+	
+	@Test
+	public void testDeleteMerchant()
+	{
+		IMerchantRepository repo = mock(IMerchantRepository.class);
+		
+		try
+		{
+			MerchantManager merchantManager = new MerchantManager(repo);
+			when(repo.deleteMerchant(2)).thenReturn(new Merchant("Test1", 2, "A Test merchant"));
+			Merchant merchant = merchantManager.deleteMerchant(2);
+					
+			assertEquals(merchant.getName(), "Test1");
+			assertEquals(merchant.getMerchantId(), 2);
+			assertEquals(merchant.getDescription(), "A Test merchant");		
+		}
+		catch(Exception e)
+		{
+			logger.warn(e);
+		}
+	}
 
 }

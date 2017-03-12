@@ -8,6 +8,11 @@ import marketplace.domain.Merchant;
 import marketplace.domain.MerchantOffer;
 import marketplace.domain.MerchantOfferId;
 
+/**
+ * Allows the creation and management of merchants and offers
+ * @author Chris.Parker
+ *
+ */
 public interface IMarketPlace {
 	
 	/**

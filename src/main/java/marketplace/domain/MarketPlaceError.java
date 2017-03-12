@@ -1,5 +1,10 @@
 package marketplace.domain;
 
+/**
+ * Representation of errors that can happen within merchant market place
+ * @author Chris.Parker
+ *
+ */
 public class MarketPlaceError {
 	
 	public MarketPlaceError(Integer errorCode) {

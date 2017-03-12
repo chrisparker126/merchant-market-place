@@ -1,7 +1,5 @@
 package marketplace.core;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import marketplace.domain.IMerchantRepository;
@@ -40,7 +38,7 @@ public class MerchantManager implements IMerchantManager {
 	}
 
 	@Override
-	public Merchant deleteMerchant(int merchantId) throws MerchantManagerException {
+	public Merchant deleteMerchant(Integer merchantId) throws MerchantManagerException {
 
 		logger.info("Deleting merchant with Id: " + merchantId);
 		
