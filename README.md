@@ -73,9 +73,33 @@ The "production" bean profile is required to run the app
     * content JSON see merchant place error
     
 4. Create Merchant Offer
-5. Get Merchant Offer
-5. Delete Merchant Offer
-6. Update Merchant Offer
+  * url : /merchant/:id/offer 
+  * method: **POST**
+  * Data Params (media type: JSON)
+    * name [string] required
+    * description [string] optional
+    * price [composite] required
+      * amount [string]
+      * currency [string] ISO 3 digit alpha
+  * Success Response
+    * status 200
+    * content: JSON echo of merchant
+      * name [string]
+      * description [string] 
+      * price
+      * merchantOfferId
+        * merchantId
+        * offerId
+  * Error Response
+    * status 
+      * 400 Bad Request
+      * 404 Not found
+    * content JSON see merchant place error
+	
+5. Get Merchant Offers
+6
+7. Delete Merchant Offer
+8. Update Merchant Offer
 
 
 ## Error
