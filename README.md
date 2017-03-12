@@ -87,6 +87,8 @@ The "production" bean profile is required to run the app
       * name [string]
       * description [string] 
       * price
+        * amount [string]
+        * currency [string] ISO 3 digit alpha      
       * merchantOfferId
         * merchantId
         * offerId
@@ -96,10 +98,99 @@ The "production" bean profile is required to run the app
       * 404 Not found
     * content JSON see merchant place error
 	
-5. Get Merchant Offers
-6
+5. Get Merchant Offer
+  * url /merchant/:id/offer/:oid
+    * :id [integer] merchant id
+    * :oid [integer] offer id
+  * method: **GET**
+  * Data Params none
+  * Success Response
+    * status 200
+    * content: JSON
+      * name [string]
+      * description [string] 
+      * price
+        * amount [string]
+        * currency [string] ISO 3 digit alpha      
+      * merchantOfferId
+        * merchantId
+        * offerId
+  * Error Response
+    * status 
+      * 400 Bad Request
+      * 404 Not found
+    * content JSON see merchant place error
+6. Get merchant offers
+  * url /merchant/:id/offers
+    * :id [integer] merchant id
+  * method: **GET**
+  * Data Params none
+  * Success Response
+    * status 200
+    * content: JSON
+      * list 
+        * name [string]
+        * description [string] 
+        * price
+        * merchantOfferId
+          * merchantId
+          * offerId
+  * Error Response
+    * status 
+      * 400 Bad Request
+      * 404 Not found
+    * content JSON see merchant place error 
 7. Delete Merchant Offer
+  * url /merchant/:id/offer/:oid
+    * :id [integer] merchant id
+    * :oid [integer] offer id
+  * method: **DELETE**
+  * Data Params none
+  * Success Response
+    * status 200
+    * content: JSON of deleted merhant offer
+      * name [string]
+      * description [string] 
+      * price
+        * amount [string]
+        * currency [string] ISO 3 digit alpha      
+      * merchantOfferId
+        * merchantId
+        * offerId
+  * Error Response
+    * status 
+      * 400 Bad Request
+      * 404 Not found
+    * content JSON see merchant place error
 8. Update Merchant Offer
-
+  * url /merchant/:id/offer/:oid
+    * :id [integer] merchant id
+    * :oid [integer] offer id
+  * method: **PUT**
+  * Data Params none
+  * Success Response
+    * status 200
+    * content: JSON of deleted merhant offer
+      * name [string] optional
+      * description [string] optional
+      * price [composite] optional
+        * amount [string]
+        * currency [string] ISO 3 digit alpha           
+  * Error Response
+    * status 
+      * 400 Bad Request
+      * 404 Not found
+    * content JSON see merchant place error
 
 ## Error
+
+A json body is returned in most error response status codes. 
+
+* errorCode [integer]
+* description [string]
+
+### Error Codes
+* 1, merchant does not exist 
+* 2, merchant offer does not exist
+* 3, invalid parameters
+* 4, invalid path values
