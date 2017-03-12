@@ -153,7 +153,7 @@ public class MarketPlaceControllerTests {
         when(marketPlace.getMerchantOffer(any())).thenReturn(
         		new MerchantOffer("pdd2", null, null, null));
         
-        this.mockMvc.perform(get("/merchant/1/offer/2"))
+        this.mockMvc.perform(get("/merchant/5/offer/2"))
 		.andDo(print()).andExpect(status().isOk())
 		.andExpect(jsonPath("$.name").value("pdd2"));
     }
