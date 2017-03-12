@@ -21,11 +21,11 @@ The "production" bean profile is required to run the app
 # API
 
 1. Create Merchant 
-..* url : /merchant 
-..* method: POST
-..* Data Params (media type: JSON)
-...* name [string] required
-...* description [string] optional 
+  * url : /merchant 
+  * method: POST
+  * Data Params (media type: JSON)
+   * name [string] required
+   * description [string] optional 
 2. Get Merchant
 ..* url : /merchant/:id
 ...* :id [integer] 
