@@ -1,10 +1,13 @@
 # Merchant Market Place
 
-The merchant market place REST app allows clients to create an instance of merchant 
+The merchant market place REST app allows clients to create merchant instances 
+and then allow these merchants to create offers for their market place
 
 ## Running application
 The application is built using the spring interface and uses Maven for
 dependency management
+
+### Build app
 
 You need Java JDK 1.8 and Maven.
 
@@ -12,6 +15,7 @@ first clone the project and in application directory simply run the command
 
 <code>mvn clean package</code> 
 
+### Run app
 The code comes with embedded tomcat server so you can simply run with Java 
 
 <code> java -Dspring.profiles.active=production -jar target\merchant-market-place-0.0.1-SNAPSHOT.jar</code>
