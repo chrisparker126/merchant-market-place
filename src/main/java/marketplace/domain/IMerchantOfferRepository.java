@@ -2,9 +2,6 @@ package marketplace.domain;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
-
-import marketplace.domain.exceptions.*;
 
 /**
  * Do not assume implementations are thread safe

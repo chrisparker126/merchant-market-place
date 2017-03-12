@@ -101,7 +101,9 @@ public class MarketPlaceControllerTests {
     	.thenReturn(new MerchantOffer("product1", "tasty", null, null));
     	
     	JSONObject j = new JSONObject();
-    	String createOffer = j.put("name", "product1").put("description", "tasty").toString();
+    	JSONObject price = new JSONObject();
+    	String createOffer = j.put("name", "product1").put("description", "tasty").
+    			put("price", price.put("amount", "1.50").put("currency", "USD")).toString();
     	
         this.mockMvc.perform(post("/merchant/1/offer").contentType(MediaType.APPLICATION_JSON)
         		.content(createOffer)).andDo(print()).andExpect(status().isOk())

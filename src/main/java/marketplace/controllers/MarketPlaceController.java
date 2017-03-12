@@ -151,6 +151,11 @@ public class MarketPlaceController {
 					MarketPlaceError(MarketPlaceErrorCodes.MERCHANT_DOES_NOT_EXIST), 
 					HttpStatus.NOT_FOUND);
 				
+		if(offer.getPrice() == null || offer.getName() == null)
+			return new ResponseEntity<MarketPlaceError>(new 
+					MarketPlaceError(MarketPlaceErrorCodes.INVALID_PARAMETERS), 
+					HttpStatus.BAD_REQUEST);
+		
 		MerchantOffer createdOffer = marketPlace.createMerchantOffer(
 				mid, offer.getName(), offer.getDescription(), offer.getPrice());
 		
