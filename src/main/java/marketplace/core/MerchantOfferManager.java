@@ -8,6 +8,7 @@ import marketplace.domain.IMerchantInfoRepository;
 import marketplace.domain.IMerchantOfferRepository;
 import marketplace.domain.MerchantOffer;
 import marketplace.domain.MerchantOfferId;
+import marketplace.domain.exceptions.MerchantOfferManagerException;
 
 public class MerchantOfferManager implements IMerchantOfferManager {
 

@@ -7,10 +7,10 @@ import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import marketplace.core.IMerchantManager.MerchantManagerException;
-import marketplace.core.IMerchantOfferManager.MerchantOfferManagerException;
 import marketplace.domain.Merchant;
 import marketplace.domain.MerchantOffer;
 import marketplace.domain.MerchantOfferId;
+import marketplace.domain.exceptions.MerchantOfferManagerException;
 
 /**
  * Thread safe implementation of market place interface

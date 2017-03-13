@@ -4,12 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import marketplace.core.IMerchantOfferManager.MerchantOfferManagerException;
 import marketplace.domain.IMerchantInfoRepository;
 import marketplace.domain.IMerchantOfferRepository;
 import marketplace.domain.IMerchantRepository;
 import marketplace.domain.MerchantOffer;
 import marketplace.domain.MerchantOfferId;
+import marketplace.domain.exceptions.MerchantOfferManagerException;
 
 import static org.mockito.Mockito.*;
 
@@ -22,7 +22,7 @@ import org.joda.money.Money;
 public class MerchantOfferManagerTests {
 
 	@Test
-	public final void testCreateMerchantOffer() {
+	public final void testCreateMerchantOffer() throws MerchantOfferManagerException {
 		
 		IMerchantOfferRepository repo = mock(IMerchantOfferRepository.class);
 		IMerchantInfoRepository repoInfo = mock(IMerchantInfoRepository.class);
@@ -36,24 +36,19 @@ public class MerchantOfferManagerTests {
 		
 		MerchantOfferManager offerManager = new 
 		MerchantOfferManager(repo, repoInfo);
+			
+		MerchantOffer offer =  offerManager.createMerchantOffer("product1", "a product", Money.parse("USD 1.00"), 1);
 		
-		try {
-			
-			MerchantOffer offer =  offerManager.createMerchantOffer("product1", "a product", Money.parse("USD 1.00"), 1);
-			
-			assertEquals(offer.getDescription(), "a product");
-			assertEquals(offer.getName(), "product1");
-			assertEquals(offer.price, Money.parse("USD 1.00"));
-			assertEquals(offer.getMerchantOfferId(), moid);
-			
-		} catch (MerchantOfferManagerException e) {
+		assertEquals(offer.getDescription(), "a product");
+		assertEquals(offer.getName(), "product1");
+		assertEquals(offer.price, Money.parse("USD 1.00"));
+		assertEquals(offer.getMerchantOfferId(), moid);
+		
 
-			e.printStackTrace();
-		}
 	}
 
 	@Test
-	public final void testRemoveMerchantOffer() {
+	public final void testRemoveMerchantOffer() throws MerchantOfferManagerException {
 		
 		IMerchantOfferRepository repo = mock(IMerchantOfferRepository.class);
 		IMerchantInfoRepository repoInfo = mock(IMerchantInfoRepository.class);
@@ -67,28 +62,23 @@ public class MerchantOfferManagerTests {
 		
 		MerchantOfferManager offerManager = new 
 		MerchantOfferManager(repo, repoInfo);
+			
+		MerchantOffer offer =  offerManager.removeMerchantOffer(moid);
 		
-		try {			
+		assertEquals(offer.getDescription(), "a product");
+		assertEquals(offer.getName(), "product1");
+		assertEquals(offer.price, Money.parse("USD 1.00"));
+		assertEquals(offer.getMerchantOfferId(), moid);
+		
+		MerchantOffer offerNull =  offerManager.removeMerchantOffer(moid);
+		
+		assertNull(offerNull);
 			
-			MerchantOffer offer =  offerManager.removeMerchantOffer(moid);
-			
-			assertEquals(offer.getDescription(), "a product");
-			assertEquals(offer.getName(), "product1");
-			assertEquals(offer.price, Money.parse("USD 1.00"));
-			assertEquals(offer.getMerchantOfferId(), moid);
-			
-			MerchantOffer offerNull =  offerManager.removeMerchantOffer(moid);
-			
-			assertNull(offerNull);
-			
-		} catch (MerchantOfferManagerException e) {
 
-			e.printStackTrace();
-		}
 	}
 
 	@Test
-	public final void testGetMerchantOffer() {
+	public final void testGetMerchantOffer() throws MerchantOfferManagerException {
 		
 		IMerchantOfferRepository repo = mock(IMerchantOfferRepository.class);
 		IMerchantInfoRepository repoInfo = mock(IMerchantInfoRepository.class);
@@ -101,23 +91,17 @@ public class MerchantOfferManagerTests {
 		
 		MerchantOfferManager offerManager = new 
 		MerchantOfferManager(repo, repoInfo);
+			
+		MerchantOffer offer =  offerManager.getMerchantOffer(moid);
 		
-		try {
-			
-			MerchantOffer offer =  offerManager.getMerchantOffer(moid);
-			
-			assertEquals(offer.getDescription(), "a product");
-			assertEquals(offer.getName(), "product1");
-			assertEquals(offer.price, Money.parse("USD 1.00"));
-			assertEquals(offer.getMerchantOfferId(), moid);
-			
-		} catch (MerchantOfferManagerException e) {
+		assertEquals(offer.getDescription(), "a product");
+		assertEquals(offer.getName(), "product1");
+		assertEquals(offer.price, Money.parse("USD 1.00"));
+		assertEquals(offer.getMerchantOfferId(), moid);
 
-			e.printStackTrace();
-		}
 	}
 	
-	public final void testGetMerchantOffers()
+	public final void testGetMerchantOffers() throws MerchantOfferManagerException
 	{
 		IMerchantOfferRepository repo = mock(IMerchantOfferRepository.class);
 		IMerchantInfoRepository repoInfo = mock(IMerchantInfoRepository.class);
@@ -135,17 +119,12 @@ public class MerchantOfferManagerTests {
 		
 		MerchantOfferManager offerManager = new 
 		MerchantOfferManager(repo, repoInfo);
-		
-		try {
-			
+
 			Collection<MerchantOffer> resultOffers =  offerManager.getMerchantOffers(1);
 			
 			assertEquals(resultOffers.size(), 2);
 			
-		} catch (MerchantOfferManagerException e) {
 
-			e.printStackTrace();
-		}
 	}
 
 }

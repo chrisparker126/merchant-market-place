@@ -3,7 +3,7 @@ package marketplace.core;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-
+import marketplace.core.IMerchantManager.MerchantManagerException;
 import marketplace.domain.IMerchantRepository;
 import marketplace.domain.Merchant;
 
@@ -17,65 +17,46 @@ public class MerchantManagerTests {
 	Logger logger = Logger.getLogger(MerchantManagerTests.class);
 	
 	@Test
-	public void testAddMerchant() {
+	public void testAddMerchant() throws MerchantManagerException {
 		IMerchantRepository repo = mock(IMerchantRepository.class);
 		
-		try
-		{
-			when(repo.getTopMerchantId()).thenReturn(2);				
-			MerchantManager merchantManager = new MerchantManager(repo);			
-			Merchant m = merchantManager.createMerchant("Test1", "This is a test merchant");
-			assertEquals(m.getMerchantId(), 3);
-		}
-		catch(Exception e)
-		{
-			logger.warn(e);
-		}
+		when(repo.getTopMerchantId()).thenReturn(2);				
+		MerchantManager merchantManager = new MerchantManager(repo);			
+		Merchant m = merchantManager.createMerchant("Test1", "This is a test merchant");
+		assertEquals(m.getMerchantId(), 3);
+		assertEquals(m.getName(), "Test1");
+		assertEquals(m.getDescription(), "This is a test merchant");		
 	}
 
 	@Test
-	public void testGetMerchant() 
+	public void testGetMerchant() throws MerchantManagerException 
 	{
 		IMerchantRepository repo = mock(IMerchantRepository.class);
 		
-		try
-		{
-			MerchantManager merchantManager = new MerchantManager(repo);
-			when(repo.getMerchant(2)).thenReturn(new Merchant("Test1", 2, "A Test merchant"));
-			Merchant merchant = merchantManager.getMerchant(2);
-					
-			assertEquals(merchant.getName(), "Test1");
-			assertEquals(merchant.getMerchantId(), 2);
-			assertEquals(merchant.getDescription(), "A Test merchant");			
-		}
-		catch(Exception e)
-		{
-			logger.warn(e);
-		}
-		
-
+		MerchantManager merchantManager = new MerchantManager(repo);
+		when(repo.getMerchant(2)).thenReturn(new Merchant("Test1", 2, "A Test merchant"));
+		Merchant merchant = merchantManager.getMerchant(2);
+				
+		assertEquals(merchant.getName(), "Test1");
+		assertEquals(merchant.getMerchantId(), 2);
+		assertEquals(merchant.getDescription(), "A Test merchant");			
+	
 	}
 	
 	
 	@Test
-	public void testDeleteMerchant()
+	public void testDeleteMerchant() throws MerchantManagerException
 	{
 		IMerchantRepository repo = mock(IMerchantRepository.class);
 		
-		try
-		{
-			MerchantManager merchantManager = new MerchantManager(repo);
-			when(repo.deleteMerchant(2)).thenReturn(new Merchant("Test1", 2, "A Test merchant"));
-			Merchant merchant = merchantManager.deleteMerchant(2);
-					
-			assertEquals(merchant.getName(), "Test1");
-			assertEquals(merchant.getMerchantId(), 2);
-			assertEquals(merchant.getDescription(), "A Test merchant");		
-		}
-		catch(Exception e)
-		{
-			logger.warn(e);
-		}
+		MerchantManager merchantManager = new MerchantManager(repo);
+		when(repo.deleteMerchant(2)).thenReturn(new Merchant("Test1", 2, "A Test merchant"));
+		Merchant merchant = merchantManager.deleteMerchant(2);
+				
+		assertEquals(merchant.getName(), "Test1");
+		assertEquals(merchant.getMerchantId(), 2);
+		assertEquals(merchant.getDescription(), "A Test merchant");		
+	
 	}
 
 }

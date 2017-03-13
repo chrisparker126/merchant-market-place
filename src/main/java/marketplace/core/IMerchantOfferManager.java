@@ -1,20 +1,13 @@
 package marketplace.core;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.joda.money.Money;
 import marketplace.domain.*;
+import marketplace.domain.exceptions.MerchantOfferManagerException;
 
 
 public interface IMerchantOfferManager {
-	
-	public class MerchantOfferManagerException extends Exception	
-	{
-		public MerchantOfferManagerException(String message) {
-			super(message);
-		}		
-	}
 	
 	public MerchantOffer createMerchantOffer(String name, String description, 
 			Money price, Integer merchantId) throws MerchantOfferManagerException;

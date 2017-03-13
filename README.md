@@ -24,9 +24,10 @@ The "production" bean profile is required to run the app
 
 ## Example
 
-Getting a merchants' offers running on local host
+Getting a merchant's offer running on local host
 
-  * http://localhost:8080/merchant/1/offers
+  * http://localhost:8080/merchant/1/offer/2
+  <code> { "name" : "games console", "description" : "lots of fun", "price" : { "amount" 299.99" "currency" : "GBP" }, "merchantOfferId" : { "merchantId" : 1, "offerId" : 2 } } </code>
   
 # API
 
