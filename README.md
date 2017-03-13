@@ -1,10 +1,10 @@
 # Merchant Market Place
 
 The merchant market place REST app allows clients to create merchant instances 
-and then allow these merchants to create offers for their market place
+and then allow these merchants to create offers for the market place
 
 ## Running application
-The application is built using the spring interface and uses Maven for
+The application is built using the spring framework and uses Maven for
 dependency management
 
 ### Build app
@@ -16,11 +16,14 @@ first clone the project and in application directory simply run the command
 <code>mvn clean package</code> 
 
 ### Run app
-The code comes with embedded tomcat server so you can simply run with Java 
+The code comes with an embedded tomcat servelet container so you can simply run the jar 
 
 <code> java -Dspring.profiles.active=production -jar target\merchant-market-place-0.0.1-SNAPSHOT.jar</code>
 
-The "production" bean profile is required to run the app
+The "production" bean profile is needed to use the correct bean dependencies. 
+Running tests you need to use the "test" profile.
+
+The app should run on "http://localhost:8080"
 
 ## Example
 
@@ -48,7 +51,7 @@ Getting a merchant's offer running on local host
   * Error Response
     * status 
       * 400 Bad Request
-    * content JSON see merchant place error
+    * content JSON see Error topic at bottom
 	
          
 2. Get Merchant
@@ -66,7 +69,7 @@ Getting a merchant's offer running on local host
     * status 
       * 400 Bad Request
       * 404 Not found
-    * content JSON see merchant place error
+    * content JSON see Error topic at bottom
  
 3. Delete Merchant
   * URL /merchant/:id
@@ -83,7 +86,7 @@ Getting a merchant's offer running on local host
     * status 
       * 400 Bad Request
       * 404 Not found
-    * content JSON see merchant place error
+    * content JSON see Error topic at bottom
     
 4. Create Merchant Offer
   * **URL** /merchant/:id/offer 
@@ -180,7 +183,12 @@ Getting a merchant's offer running on local host
     * :id [integer] merchant id
     * :oid [integer] offer id
   * method: **PUT**
-  * Data Params none
+  * Data Params (media type: JSON)
+    * name [string] optional
+    * description [string] optional
+    * price [composite] optional
+      * amount [string]
+      * currency [string] ISO 3 digit alpha
   * Success Response
     * status 200
     * content: JSON of deleted merhant offer
@@ -193,7 +201,7 @@ Getting a merchant's offer running on local host
     * status 
       * 400 Bad Request
       * 404 Not found
-    * content JSON see Error topic below
+    * content JSON see Error topic at bottom
 
 ## Errors
 
